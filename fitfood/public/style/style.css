@@ -622,3 +622,104 @@ header img:hover {
     margin: 10px;
     padding: 10px;
 }
+
+.contentPerfil{
+    display: flex;
+    flex-direction: column;
+    margin: 50px 300px;
+    padding: 30px;
+    background-color: #e4e4e4;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.301);
+}
+
+.perfilImg{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 20px auto !important;
+    border: 1px solid #000000 !important;
+    display: flex !important;
+}
+
+.adicionais{
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-around;
+}
+
+.adicionais a{
+    display: flex;
+    max-width: 350px;
+    text-align: center;
+
+}
+
+.pacientesList{
+    display: flex;
+    flex-direction: column;
+    margin: 50px 300px;
+    padding: 30px;
+    background-color: #e4e4e4;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.301);
+}
+
+.pacientesList td{
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+#cadPaciente{
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: auto !important;
+    display: block;
+    max-width: 350px;
+    align-items: center;
+    text-align: center;
+}
+
+.cadastroPaciente{
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+.cadastroPaciente form {
+    width: 100%;
+    max-width: 500px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.passoAPasso {
+    display: flex;
+    margin: 30px auto;
+    padding: 10px;
+    background-color: #e4e4e4;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.301);
+    width: 90%;
+    height: 100px;
+}
+
+.observacoes {
+    display: flex;
+    margin: 30px auto;
+    padding: 10px;
+    background-color: #e4e4e4;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.301);
+    width: 90%;
+    height: 100px;
+}
+
