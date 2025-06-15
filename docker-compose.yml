@@ -5,7 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      container_name: apache_server
     ports:
       - "8000:80"
     volumes:
