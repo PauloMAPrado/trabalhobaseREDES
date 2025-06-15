@@ -1,26 +1,14 @@
-# Use uma imagem base do PHP com Apache
-FROM php:7.4-apache
+FROM php:8.2-apache
 
-# Instale as extensões necessárias do PHP   .... nao usar get
-RUN apt-get update && apt-get install -y \ 
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    zip \
-    unzip \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j $(nproc) gd mysqli pdo pdo_mysql
 
-    # pesquisar pq das extensões, é necessário?
+# Instala PDO + cliente MySQL
+RUN docker-php-ext-install mysqli pdo pdo_mysql && \
+    apt-get update && apt-get install -y default-mysql-client && docker-php-ext-enable mysqli
 
-# Habilite o módulo rewrite do Apache
+RUN echo "ServerName webserver" >> /etc/apache2/apache2.conf
+
+# Habilita mod_rewrite do Apache
 RUN a2enmod rewrite
 
-# Defina o diretório de trabalho dentro do container
+# Define diretório padrão
 WORKDIR /var/www/html
-
-# Copie os arquivos do projeto para o diretório de trabalho
-COPY . /var/www/html/
-
-# Ajuste as permissões (se necessário)
-RUN chown -R www-data:www-data /var/www/html/
