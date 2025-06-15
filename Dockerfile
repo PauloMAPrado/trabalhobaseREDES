@@ -1,14 +1,13 @@
 FROM php:8.2-apache
 
+# Atualiza pacotes e instala extensões PHP necessárias + cliente MySQL
+RUN apt-get update && \
+    apt-get install -y default-mysql-client && \
+    docker-php-ext-install mysqli pdo pdo_mysql
 
-# Instala PDO + cliente MySQL
-RUN docker-php-ext-install mysqli pdo pdo_mysql && \
-    apt-get update && apt-get install -y default-mysql-client && docker-php-ext-enable mysqli
+# Configura o Apache
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
+    a2enmod rewrite
 
-RUN echo "ServerName webserver" >> /etc/apache2/apache2.conf
-
-# Habilita mod_rewrite do Apache
-RUN a2enmod rewrite
-
-# Define diretório padrão
+# Define o diretório de trabalho
 WORKDIR /var/www/html
