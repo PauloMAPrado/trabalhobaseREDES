@@ -1,48 +1,61 @@
 version: '3.8'
 
 services:
+  #--- SERVIÇO APACHE COM PHP ---#
   apache:
     build:
-      context: ./apache
-    container_name: apache_redes
+      context: .
+      dockerfile: Dockerfile
+    container_name: apache_server
+    restart: always
+    ports:
+      - "8050:80"
+    volumes:
+      - ./www:/var/www/html
     depends_on:
       - mysql
-    ports:
-      - "8080:80"
-    volumes:
-      - ./src:/var/www/html/
     networks:
-      - app-network
+      - network_server
 
+  #--- SERVIÇO DO BANCO DE DADOS MYSQL ---#
   mysql:
-    image: mysql:8.0
-    container_name: mysql_redes
+    image: mysql:8.0 # Versão fixada
+    container_name: mysql_server
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 123456789
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: fitfood
+      MYSQL_USER: aluno
+      MYSQL_PASSWORD: 123456789
+    ports:
+      - "3356:3356" # Mapeia a porta para o host (opcional, para acesso externo)
+    command: --port=3356
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql # Usando volume nomeado
     networks:
-      - app-network
+      - network_server
 
+  #--- SERVIÇO PHPMYADMIN ---#
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: php_redes
+    image: phpmyadmin:5.2 # Versão fixada para reprodutibilidade
+    container_name: phpmyadmin_server
     restart: always
+    ports:
+      - "8051:80"
+    environment:
+      PMA_HOST: mysql # Conecta ao serviço 'mysql'
+      PMA_PORT: 3356 # Na porta interna 3356
+      MYSQL_ROOT_PASSWORD: root
     depends_on:
       - mysql
-    ports:
-      - "8081:80"
-    environment:
-      PMA_HOST: mysql
-      MYSQL_ROOT_PASSWORD: 123456789
     networks:
-      - app-network
+      - network_server
 
+#--- REDE PARA OS CONTÊINERES SE COMUNICAREM ---#
 networks:
-  app-network:
+  network_server:
     driver: bridge
 
+#--- VOLUME NOMEADO PARA PERSISTIR OS DADOS DO MYSQL ---#
 volumes:
-  mysql-data:
+  mysql_data:
