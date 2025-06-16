@@ -1,36 +1,48 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  app:
+  apache:
     build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8888:80"
-    volumes:
-      - .:/var/www/html
+      context: ./apache
+    container_name: apache_redes
     depends_on:
-      - db
+      - mysql
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html/
+    networks:
+      - app-network
 
-  db:
-    image: mysql
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_redes
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 123456789
       MYSQL_DATABASE: fitfood
-    ports:
-      - "3306:3306"
     volumes:
-      - db_data:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
 
   phpmyadmin:
-    image: phpmyadmin
-    ports:
-      - "8080:80"
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
+    image: phpmyadmin/phpmyadmin
+    container_name: php_redes
+    restart: always
     depends_on:
-      - db
+      - mysql
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: 123456789
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
-  db_data:
+  mysql-data:
