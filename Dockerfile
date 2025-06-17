@@ -1,7 +1,5 @@
-# Usa a imagem oficial do PHP 8.2 com Apache como base.
 FROM php:8.2-apache
 
-# --- INSTALAÇÃO DE DEPENDÊNCIAS DO SISTEMA E EXTENSÕES PHP ---
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends libicu-dev && \

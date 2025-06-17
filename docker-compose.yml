@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  #--- SERVIÇO APACHE COM PHP ---#
   apache:
     build:
       context: .
@@ -17,7 +16,6 @@ services:
     networks:
       - network_server
 
-  #--- SERVIÇO DO BANCO DE DADOS MYSQL ---#
   mysql:
     image: mysql:8.0 
     container_name: mysql_server
@@ -36,7 +34,6 @@ services:
     networks:
       - network_server
 
-  #--- SERVIÇO PHPMYADMIN ---#
   phpmyadmin:
     image: phpmyadmin:5.2 
     container_name: phpmyadmin_server
@@ -44,19 +41,19 @@ services:
     ports:
       - "8051:80"
     environment:
-      PMA_HOST: mysql # Conecta ao serviço 'mysql'
-      PMA_PORT: 3356 # Na porta interna 3356
+      PMA_HOST: mysql 
+      PMA_PORT: 3356 
       MYSQL_ROOT_PASSWORD: root
     depends_on:
       - mysql
     networks:
       - network_server
 
-#--- REDE PARA OS CONTÊINERES SE COMUNICAREM ---#
+
 networks:
   network_server:
     driver: bridge
 
-#--- VOLUME NOMEADO PARA PERSISTIR OS DADOS DO MYSQL ---#
+
 volumes:
   mysql_data:
