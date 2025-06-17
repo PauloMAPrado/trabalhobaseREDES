@@ -23,12 +23,12 @@ services:
     container_name: mysql_server
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: fitfood
-      MYSQL_USER: aluno
-      MYSQL_PASSWORD: 123456789
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3356:3356" # Mapeia a porta para o host (opcional, para acesso externo)
+      - "3306:3306" # Mapeia a porta para o host (opcional, para acesso externo)
     command: --port=3356
     volumes:
       - mysql_data:/var/lib/mysql # Usando volume nomeado
