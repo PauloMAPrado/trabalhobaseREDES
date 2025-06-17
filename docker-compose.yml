@@ -19,7 +19,7 @@ services:
 
   #--- SERVIÇO DO BANCO DE DADOS MYSQL ---#
   mysql:
-    image: mysql:8.0 # Versão fixada
+    image: mysql:8.0 
     container_name: mysql_server
     restart: always
     environment:
@@ -29,16 +29,16 @@ services:
       MYSQL_PASSWORD: 123456789
 
     ports:
-      - "3306:3306" # Mapeia a porta para o host (opcional, para acesso externo)
+      - "3306:3306"
     command: --port=3356
     volumes:
-      - mysql_data:/var/lib/mysql # Usando volume nomeado
+      - mysql_data:/var/lib/mysql 
     networks:
       - network_server
 
   #--- SERVIÇO PHPMYADMIN ---#
   phpmyadmin:
-    image: phpmyadmin:5.2 # Versão fixada para reprodutibilidade
+    image: phpmyadmin:5.2 
     container_name: phpmyadmin_server
     restart: always
     ports:
